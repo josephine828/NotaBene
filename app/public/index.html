@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Nota Bene</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script type="module" src="script.js"></script>
+        <script type="module" src="settings.js"></script>
+        <script type="module" src="toDoList.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1 id="logo">Nota Bene</h1>
+            <div id="tabsContainer">
+                <a>home</a>
+                <a href="./notes.html">notes</a>
+                <div id="settingsTab">settings</div>
+            </div>
+        </header>
+        <div id="viewContainer">
+            View:
+            <div id="singleView">Single List</div>
+            <div id="multipleView">Multiple Lists</div>
+        </div>
+        <div id="singleViewContainer">
+            <h2>All Tasks</h2>
+            <div id="leftSideContainers">
+                <div id="listsLegendContainer">
+                    Lists:
+                    <div id="listsLegend">
+                        No Lists
+                    </div>
+                </div>
+                <div id="categoriesLegendContainer">
+                    Categories:
+                    <div id="categoriesLegend">
+                        No Categories
+                    </div>
+                </div>
+            </div>
+            <div id="tasksContainer">
+                You currently have no tasks to work on.
+                <div id="quickAddTaskContainer">
+                    <input placeholder="Enter new task">
+                    <button class="quickAddTask">+</button>
+                </div>
+            </div>
+            <div id="rightSideContainers">
+                <label>Filter by:
+                    <select id="filterSelect" name="filterSelect">
+                        <option value="list">List</option>
+                        <option value="category">Category</option>
+                    </select>
+                </label>
+                <label>Sort by:
+                    <select id="sortSelect" name="sortSelect">
+                        <option value="dueSooner">Due Sooner</option>
+                        <option value="dueLater">Due Later</option>
+                        <option value="mostRecent">Most Recent</option>
+                        <option value="leastRecent">Least Recent</option>
+                        <option value="aToZ">A to Z</option>
+                        <option value="zToA">Z to A</option>
+                        <option value="category">Category</option>
+                    </select>
+                </label>
+                <button id="addTaskButton">Add Task</button>
+            </div>
+        </div>
+
+        <div id="multipleViewContainer" style="display: none;">
+            You currently have no lists.
+        </div>
+
+        <div id="darken" style="display: none;"></div>
+        <div id="settingsPanel" style="display: none;">
+            Settings
+        </div>
+        <button id="helpButton">?</button>
+    </body>
+</html>

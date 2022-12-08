@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Nota Bene</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script type="module" src="script.js"></script>
+        <script type="module" src="settings.js"></script>
+        <script type="module" src="notes.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1 id="logo">Nota Bene</h1>
+            <div id="tabsContainer">
+                <a href="./index.html">home</a>
+                <a>notes</a>
+                <div id="settingsTab">settings</div>
+            </div>
+        </header>
+        <div id="container">
+            Notes
+            <div id="notesGroupsContainer">
+                You currently do not have any notes or groups.
+            </div>
+            <div id="filterAndSortContainer">
+                <label>Filter by:
+                    <select id="filterSelect" name="filterSelect">
+                        <option value="group">Group</option>
+                        <option value="category">Category</option>
+                    </select>
+                </label>
+                <label>Sort by:
+                    <select id="sortSelect" name="sortSelect">
+                        <option value="mostRecent">Most Recent</option>
+                        <option value="leastRecent">Least Recent</option>
+                        <option value="aToZ">A to Z</option>
+                        <option value="zToA">Z to A</option>
+                        <option value="category">Category</option>
+                    </select>
+                </label>
+            </div>
+            <div id="notesDisplay">Select a note to view it here.</div>
+            <div id="notesButtonsContainer">
+                <button id="createNoteButton">Create Note</button>
+                <button id="addGroupButton">Add Group</button>
+                <button id="editNoteButton">Edit Note</button>
+            </div>
+        </div>
+
+
+
+        <div id="darken" style="display: none;"></div>
+        <div id="settingsPanel" style="display: none;">
+            Settings
+        </div>
+        <button id="helpButton">?</button>
+    </body>
+</html>
