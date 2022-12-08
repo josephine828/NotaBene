@@ -229,6 +229,12 @@ function addTask() {
         let tempTask = {taskID: taskCounter, taskName: taskNameInput.value, status: "incomplete", taskDescription: taskDescriptionInput.value, dueDate: dueDateInput.value, list: selectedList, categories: selectedCategories};
         tempTaskArray.push(tempTask);
         addTaskToList(tempTask);
+        for (let listElement of document.getElementsByClassName("selectedList")) {
+            listElement.classList.remove("selectedList");
+        }
+        for (let categoryElement of document.getElementsByClassName("selectedCategory")) {
+            categoryElement.classList.remove("selectedCategory");
+        }
         taskNameInput.value = "";
         taskDescriptionInput.value = "";
         dueDateInput.value = "";
@@ -248,6 +254,15 @@ function updateListLegends() {
         for (let tempList of tempListArray) {
             let div = document.createElement("div");
             div.textContent = tempList;
+            div.addEventListener("click", () => {
+                if (div.classList.contains("selectedListLegend")) {
+                    div.classList.remove("selectedListLegend");
+                }
+                else {
+                    div.classList.add("selectedListLegend");
+                }
+                loadFilteredTasks();
+            });
             listsLegend.append(div);
         }
     }
@@ -263,10 +278,57 @@ function updateCategoryLegend() {
             let div = document.createElement("div");
             div.textContent = tempCategory;
             categoriesLegend.append(div);
+            div.addEventListener("click", () => {
+                if (div.classList.contains("selectedCategoryLegend")) {
+                    div.classList.remove("selectedCategoryLegend");
+                }
+                else {
+                    div.classList.add("selectedCategoryLegend");
+                }
+                loadFilteredTasks();
+            });
         }
     }
     else {
         categoriesLegend.textContent = "No Categories";
+    }
+}
+
+function loadFilteredTasks() {
+    taskContainer.textContent = "";
+    let selectedListElements = document.getElementsByClassName("selectedListLegend");
+    let selectedLists = [];
+    for (let selectedListElement of selectedListElements) {
+        selectedLists.push(selectedListElement.textContent);
+    }
+    let selectedCategoryElements = document.getElementsByClassName("selectedCategoryLegend");
+    let selectedCategories = [];
+    for (let selectedCategoryElement of selectedCategoryElements) {
+        selectedCategories.push(selectedCategoryElement.textContent);
+    }
+    if (selectedLists.length === 0 && selectedCategories.length === 0) {
+        for (let task of tempTaskArray) {
+            addTaskToList(task);
+        }
+    }
+    else {
+        let tasksToAdd = [];
+        for (let task of tempTaskArray) {
+            console.log(task);
+            if (selectedLists.length > 0 && selectedLists.includes(task.list) && !tasksToAdd.includes(task)) {
+                tasksToAdd.push(task);
+            }
+            if (selectedCategories.length > 0) {
+                for (let category of task.categories) {
+                    if (selectedCategories.includes(category) && !tasksToAdd.includes(task)) {
+                        tasksToAdd.push(task);
+                    }
+                }
+            }
+        }
+        for (let task of tasksToAdd) {
+            addTaskToList(task);
+        }
     }
 }
 
