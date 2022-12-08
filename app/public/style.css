@@ -5,6 +5,10 @@ body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 
+body > div {
+    color: white;
+}
+
 button {
     cursor: pointer;
 }
@@ -60,4 +64,22 @@ header h1 {
 
 #helpButton {
     border-radius: 20px;
+}
+
+#viewContainer {
+    padding: 5px;
+    align-items: baseline;
+    float: right;
+}
+
+#viewContainer > div {
+    display: inline-block;
+    border: 3px solid white;
+    padding: 10px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.selectedView {
+    background-color: #0076a5;
 }
