@@ -23,47 +23,53 @@
             <div id="multipleView">Multiple Lists</div>
         </div>
         <div id="singleViewContainer">
+            <br>
+            <br>
             <h2>All Tasks</h2>
-            <div id="leftSideContainers">
-                <div id="listsLegendContainer">
-                    Lists:
-                    <div id="listsLegend">
-                        No Lists
+            <div id="singleContainer">
+                <div id="leftSideContainers">
+                    <div id="listsLegendContainer">
+                        Lists:
+                        <div id="listsLegend">
+                            No Lists
+                        </div>
+                    </div>
+                    <div id="categoriesLegendContainer">
+                        Categories:
+                        <div id="categoriesLegend">
+                            No Categories
+                        </div>
                     </div>
                 </div>
-                <div id="categoriesLegendContainer">
-                    Categories:
-                    <div id="categoriesLegend">
-                        No Categories
+                <div id="tasksContainer">
+                    <div id="taskContainer">
+                        <p id="noTaskMessage">You currently have no tasks to work on.</p>
+                    </div>
+                    <div id="quickAddTaskContainer">
+                        <input id="quickAddTaskInput" placeholder="Enter new task">
+                        <button id="quickAddTaskButton">+</button>
                     </div>
                 </div>
-            </div>
-            <div id="tasksContainer">
-                You currently have no tasks to work on.
-                <div id="quickAddTaskContainer">
-                    <input placeholder="Enter new task">
-                    <button class="quickAddTask">+</button>
+                <div id="rightSideContainers">
+                    <label>Filter by:
+                        <select id="filterSelect" name="filterSelect">
+                            <option value="list">List</option>
+                            <option value="category">Category</option>
+                        </select>
+                    </label>
+                    <label>Sort by:
+                        <select id="sortSelect" name="sortSelect">
+                            <option value="dueSooner">Due Sooner</option>
+                            <option value="dueLater">Due Later</option>
+                            <option value="mostRecent">Most Recent</option>
+                            <option value="leastRecent">Least Recent</option>
+                            <option value="aToZ">A to Z</option>
+                            <option value="zToA">Z to A</option>
+                            <option value="category">Category</option>
+                        </select>
+                    </label>
+                    <button id="addTaskButton">Add Task</button>
                 </div>
-            </div>
-            <div id="rightSideContainers">
-                <label>Filter by:
-                    <select id="filterSelect" name="filterSelect">
-                        <option value="list">List</option>
-                        <option value="category">Category</option>
-                    </select>
-                </label>
-                <label>Sort by:
-                    <select id="sortSelect" name="sortSelect">
-                        <option value="dueSooner">Due Sooner</option>
-                        <option value="dueLater">Due Later</option>
-                        <option value="mostRecent">Most Recent</option>
-                        <option value="leastRecent">Least Recent</option>
-                        <option value="aToZ">A to Z</option>
-                        <option value="zToA">Z to A</option>
-                        <option value="category">Category</option>
-                    </select>
-                </label>
-                <button id="addTaskButton">Add Task</button>
             </div>
         </div>
 
@@ -74,6 +80,7 @@
         <div id="darken" style="display: none;"></div>
         <div id="settingsPanel" style="display: none;">
             Settings
+            <button id="closeSettingsButton">X</button>
         </div>
         <button id="helpButton">?</button>
     </body>

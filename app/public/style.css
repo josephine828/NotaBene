@@ -11,6 +11,12 @@ body > div {
 
 button {
     cursor: pointer;
+    background-color: #0076a5;
+    border: 3px solid white;
+    font-size: large;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;
 }
 
 header {
@@ -43,27 +49,34 @@ header h1 {
 
 #darken {
     background-color: #0000007a;
-    width: 110%;
-    height: 110%;
+    width: 1000vw;
+    height: 1000vh;
     position: fixed;
-    margin: -1rem -1rem;
+    margin: -90vh;
 }
 
 #settingsPanel {
-    background-color: #008dc5;
+    background-color: #005475;
     border-radius: 20px;
     padding: 3rem;
     top: 50%;
     left: 50%;
-    margin-top: -25rem;
-    margin-left: -20rem; 
-    width: 40rem;
-    height: 50rem;
+    transform: translate(-50%, -50%);
+    width: 40vw;
+    height: 50vh;
     position: fixed;
 }
 
+#closeSettingsButton {
+    position: fixed;
+    right: 3rem;
+}
+
 #helpButton {
-    border-radius: 20px;
+    border-radius: 20px; 
+    right: 10px;
+    bottom: 10px;
+    position: fixed;
 }
 
 #viewContainer {
@@ -82,4 +95,69 @@ header h1 {
 
 .selectedView {
     background-color: #0076a5;
+}
+
+#singleViewContainer > h2 {
+    text-align: center;
+}
+
+#singleContainer {
+    display: flex;
+    height: 80vh;
+    width: 90vw;
+    justify-content: center;
+    margin: auto;
+}
+
+#leftSideContainers {
+    margin-right: 10px;
+    width: 20vh;
+}
+
+#listsLegendContainer, #categoriesLegendContainer {
+    border: 3px solid white;
+    height: 25vh;
+    width: 17.5vh;
+    margin-bottom: 50px;
+    padding: 1vh;
+}
+
+#tasksContainer {
+    border: 3px solid white;
+    text-align: center;
+    width: 35vw;
+}
+
+#taskContainer {
+    padding: 1vw;
+    height: 72.5vh;
+}
+
+#quickAddTaskContainer {
+    position: absolute;
+    width: 30vw;
+    margin-left: 2.5vw;
+    padding-top: 1vh;
+    bottom: 5vh;
+    border-top: 2px solid white;
+}
+
+#rightSideContainers {
+    width: 20vh;
+}
+
+#rightSideContainers > label {
+    display: flex;
+    margin: 0 0 50px 10px;
+    width: 10vh;
+    flex-wrap: wrap;
+    height: 5vh;
+    padding: 1vh;
+}
+
+#rightSideContainers > button {
+    position: absolute;
+    bottom: 3.25vh;
+    margin-left: 10px;
+    padding: 10px;
 }
