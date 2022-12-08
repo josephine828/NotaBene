@@ -55,7 +55,7 @@ header h1 {
     margin: -90vh;
 }
 
-#settingsPanel {
+.menuPanel {
     background-color: #005475;
     border-radius: 20px;
     padding: 3rem;
@@ -67,7 +67,7 @@ header h1 {
     position: fixed;
 }
 
-#closeSettingsButton {
+.closeButton {
     position: fixed;
     right: 3rem;
 }
@@ -131,6 +131,11 @@ header h1 {
 #taskContainer {
     padding: 1vw;
     height: 72.5vh;
+    overflow-y: auto;
+}
+
+.task {
+    cursor: pointer;
 }
 
 #quickAddTaskContainer {

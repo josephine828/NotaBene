@@ -73,14 +73,48 @@
             </div>
         </div>
 
+
+        <div id="darken" style="display: none;"></div>
+
         <div id="multipleViewContainer" style="display: none;">
             You currently have no lists.
         </div>
 
-        <div id="darken" style="display: none;"></div>
-        <div id="settingsPanel" style="display: none;">
+        <div id="addTaskMenu" class="menuPanel" style="display: none;">
+            Add a Task
+            <button class="closeButton">X</button>
+            <div id="addMenuContainer">
+                <div id="leftAddMenuContainer">
+                    <input id="taskNameInput" placeholder="Enter task name">
+                    <input id="taskDescriptionInput" placeholder="Enter task description">
+                </div>
+                <div id="rightAddMenuContainer">
+                    <label for="dueDate">Due Date:</label>
+                    <input type="date" id="dueDateInput" name="dueDate">
+                    <div id="listContainer">List:
+                        <div id="listSelect"></div>
+                        <input id="listInput" placeholder="New List">
+                        <button id="addListButton">+</button>
+                    </div>
+                </div>
+            </div>
+            <div id="categoriesContainer">
+                Categories:
+                <div id="categorySelect"></div>
+                <input id="categoryInput" placeholder="New Category">
+                <button id="addCategoryButton">+</button>
+            </div>
+            <button class="closeButton">Cancel</button>
+            <button id="addTaskMenuButton">Add</button>
+        </div>
+
+        <div id="editTaskMenu" class="menuPanel" style="display: none;">
+            Edit
+            <button class="closeButton">X</button>
+        </div>
+        <div id="settingsPanel" class="menuPanel" style="display: none;">
             Settings
-            <button id="closeSettingsButton">X</button>
+            <button class="closeButton">X</button>
         </div>
         <button id="helpButton">?</button>
     </body>
