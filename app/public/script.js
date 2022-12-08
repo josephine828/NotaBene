@@ -106,13 +106,6 @@ function quickAddTask(taskName) {
 }
 
 function addTaskToList(taskObject) {
-    for (let temp of document.getElementsByClassName("selectedListLegend")) {
-        temp.classList.remove("selectedListLegend");
-    }
-    for (let temp of document.getElementsByClassName("selectedCategoryLegend")) {
-        temp.classList.remove("selectedCategoryLegend");
-    }
-    // loadFilteredTasks();
     let taskName = taskObject.taskName;
     let taskDiv = document.createElement("div");
     taskDiv.textContent = taskName;
@@ -251,6 +244,7 @@ function addTask() {
         tempTaskArray.push(tempTask);
         tempShownTasks.push(tempTask);
         addTaskToList(tempTask);
+
         for (let listElement of document.getElementsByClassName("selectedList")) {
             listElement.classList.remove("selectedList");
         }
@@ -279,11 +273,9 @@ function updateListLegends() {
             div.addEventListener("click", () => {
                 if (div.classList.contains("selectedListLegend")) {
                     div.classList.remove("selectedListLegend");
-                    div.style.color = "white";
                 }
                 else {
                     div.classList.add("selectedListLegend");
-                    div.style.color = "green";
                 }
                 loadFilteredTasks();
             });
@@ -301,16 +293,17 @@ function updateCategoryLegend() {
         for (let tempCategory of tempCategoryArray) {
             let div = document.createElement("div");
             div.textContent = tempCategory;
-            categoriesLegend.append(div);
             div.addEventListener("click", () => {
                 if (div.classList.contains("selectedCategoryLegend")) {
                     div.classList.remove("selectedCategoryLegend");
                 }
                 else {
                     div.classList.add("selectedCategoryLegend");
+                    console.log("added");
                 }
                 loadFilteredTasks();
             });
+            categoriesLegend.append(div);
         }
     }
     else {
@@ -333,7 +326,6 @@ function loadFilteredTasks() {
     }
     if (selectedLists.length === 0 && selectedCategories.length === 0) {
         tempShownTasks = tempTaskArray;
-        console.log(tempShownTasks);
     }
     else {
         for (let task of tempTaskArray) {

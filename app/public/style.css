@@ -122,6 +122,15 @@ header h1 {
     padding: 1vh;
 }
 
+#listsLegend > div, #categoriesLegend > div {
+    padding: 10px;
+}
+
+#listsLegend > div:hover, #categoriesLegend > div:hover {
+    cursor: pointer;
+    background-color: #007bac;
+}
+
 .selectedListLegend, .selectedCategoryLegend {
     color: green;
 }
