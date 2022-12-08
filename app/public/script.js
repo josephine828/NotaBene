@@ -15,8 +15,10 @@ let listSelect = document.getElementById("listSelect");
 let categorySelect = document.getElementById("categorySelect");
 let addListButton = document.getElementById("addListButton");
 let addCategoryButton = document.getElementById("addCategoryButton");
+let sortSelect = document.getElementById("sortSelect");
 
 let tempTaskArray = [];
+let tempShownTasks = [];
 let tempListArray = [];
 let tempCategoryArray = [];
 let taskCounter = 0;
@@ -84,6 +86,8 @@ function init() {
     document.getElementById("addTaskMenuButton").addEventListener("click", () => {
         addTask();
     });
+
+    sortSelect.addEventListener("change", sortTasks);
 }
 
 function quickAddTask(taskName) {
@@ -94,19 +98,28 @@ function quickAddTask(taskName) {
         taskCounter++;
         quickAddTaskInput.value = "";
         noTaskMessage.style.display = "none";
-        let tempTask = {taskID: taskCounter, taskName: taskName, status: "incomplete", taskDescription: "", dueDate: null, list: "", categories: []};
+        let tempTask = {taskID: taskCounter, taskName: taskName, status: "incomplete", taskDescription: "", dueDate: null, list: "", categories: [], modified: new Date()};
         tempTaskArray.push(tempTask);
+        tempShownTasks.push(tempTask);
         addTaskToList(tempTask);
     }
 }
 
 function addTaskToList(taskObject) {
+    for (let temp of document.getElementsByClassName("selectedListLegend")) {
+        temp.classList.remove("selectedListLegend");
+    }
+    for (let temp of document.getElementsByClassName("selectedCategoryLegend")) {
+        temp.classList.remove("selectedCategoryLegend");
+    }
+    // loadFilteredTasks();
     let taskName = taskObject.taskName;
     let taskDiv = document.createElement("div");
     taskDiv.textContent = taskName;
     taskDiv.classList.add("task");
     taskDiv.setAttribute("taskID", taskCounter);
-    taskDiv.addEventListener("click", () => {
+    taskDiv.addEventListener("click", (e) => {
+        e.stopPropagation();
         editTaskMenu.style.display = "block";
         darken.style.display = "block";
     });
@@ -114,15 +127,23 @@ function addTaskToList(taskObject) {
     let doneButton = document.createElement("button");
     doneButton.textContent = "\u2713";
     doneButton.classList.add("doneButton");
-    doneButton.addEventListener("click", () => {
-        doneButton.parentElement.classList.add("complete");
-        tempTaskArray[parseInt(doneButton.parentElement.getAttribute("taskID"))].status = "complete";
+    doneButton.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (doneButton.parentElement.classList.contains("complete")) {
+            doneButton.parentElement.classList.remove("complete");
+            tempTaskArray[parseInt(doneButton.parentElement.getAttribute("taskID")) - 1].status = "incomplete";
+        }
+        else {
+            doneButton.parentElement.classList.add("complete");
+            tempTaskArray[parseInt(doneButton.parentElement.getAttribute("taskID")) - 1].status = "complete";
+        }
     });
 
     let deleteButton = document.createElement("button");
     deleteButton.textContent = "X";
     deleteButton.classList.add("deleteButton");
-    deleteButton.addEventListener("click", () => {
+    deleteButton.addEventListener("click", (e) => {
+        e.stopPropagation();
         deleteButton.parentElement.remove();
         tempTaskArray = tempTaskArray.filter((task) => {return task.taskID !== parseInt(deleteButton.parentElement.getAttribute("taskID"))});
     });
@@ -226,8 +247,9 @@ function addTask() {
         for (let selectedCategoryElement of selectedCategoryElements) {
             selectedCategories.push(selectedCategoryElement.textContent);
         }
-        let tempTask = {taskID: taskCounter, taskName: taskNameInput.value, status: "incomplete", taskDescription: taskDescriptionInput.value, dueDate: dueDateInput.value, list: selectedList, categories: selectedCategories};
+        let tempTask = {taskID: taskCounter, taskName: taskNameInput.value, status: "incomplete", taskDescription: taskDescriptionInput.value, dueDate: dueDateInput.value, list: selectedList, categories: selectedCategories, modified: new Date()};
         tempTaskArray.push(tempTask);
+        tempShownTasks.push(tempTask);
         addTaskToList(tempTask);
         for (let listElement of document.getElementsByClassName("selectedList")) {
             listElement.classList.remove("selectedList");
@@ -257,9 +279,11 @@ function updateListLegends() {
             div.addEventListener("click", () => {
                 if (div.classList.contains("selectedListLegend")) {
                     div.classList.remove("selectedListLegend");
+                    div.style.color = "white";
                 }
                 else {
                     div.classList.add("selectedListLegend");
+                    div.style.color = "green";
                 }
                 loadFilteredTasks();
             });
@@ -296,6 +320,7 @@ function updateCategoryLegend() {
 
 function loadFilteredTasks() {
     taskContainer.textContent = "";
+    tempShownTasks = [];
     let selectedListElements = document.getElementsByClassName("selectedListLegend");
     let selectedLists = [];
     for (let selectedListElement of selectedListElements) {
@@ -307,28 +332,132 @@ function loadFilteredTasks() {
         selectedCategories.push(selectedCategoryElement.textContent);
     }
     if (selectedLists.length === 0 && selectedCategories.length === 0) {
-        for (let task of tempTaskArray) {
-            addTaskToList(task);
-        }
+        tempShownTasks = tempTaskArray;
+        console.log(tempShownTasks);
     }
     else {
-        let tasksToAdd = [];
         for (let task of tempTaskArray) {
             console.log(task);
-            if (selectedLists.length > 0 && selectedLists.includes(task.list) && !tasksToAdd.includes(task)) {
-                tasksToAdd.push(task);
+            if (selectedLists.length > 0 && selectedLists.includes(task.list) && !tempShownTasks.includes(task)) {
+                tempShownTasks.push(task);
             }
             if (selectedCategories.length > 0) {
                 for (let category of task.categories) {
-                    if (selectedCategories.includes(category) && !tasksToAdd.includes(task)) {
-                        tasksToAdd.push(task);
+                    if (selectedCategories.includes(category) && !tempShownTasks.includes(task)) {
+                        tempShownTasks.push(task);
                     }
                 }
             }
         }
-        for (let task of tasksToAdd) {
-            addTaskToList(task);
-        }
+    }
+    for (let task of tempShownTasks) {
+        addTaskToList(task);
+    }
+}
+
+function sortTasks() {
+    switch (sortSelect.value) {
+        case ("dueSooner"):
+            let tempNoDueDate = tempShownTasks.filter((task) => {return task.dueDate === null});
+            tempShownTasks = tempShownTasks.filter((task) => {return task.dueDate !== null});
+            tempShownTasks.sort(function(a, b) {
+                const x = new Date(a.dueDate).getTime();
+                const y = new Date(b.dueDate).getTime();
+                if (x > y) {
+                    return 1;
+                }
+                if (x < y) {
+                    return -1;
+                }
+                return 0;
+            });
+            tempShownTasks = tempShownTasks.concat(tempNoDueDate);
+            break;
+        case ("dueLater"):
+            tempShownTasks.sort(function(a, b) {
+                const x = new Date(a.dueDate).getTime();
+                const y = new Date(b.dueDate).getTime();
+                if (x > y) {
+                    return -1;
+                }
+                if (x < y) {
+                    return 1;
+                }
+                return 0;
+            });
+            break;
+        case ("mostRecent"):
+            tempShownTasks.sort(function(a, b) {
+                const x = new Date(a.modified).getTime();
+                const y = new Date(b.modified).getTime();
+                if (x > y) {
+                    return -1;
+                }
+                if (x < y) {
+                    return 1;
+                }
+                return 0;
+            });
+            break;
+        case ("leastRecent"):
+            tempShownTasks.sort(function(a, b) {
+                const x = new Date(a.modified).getTime();
+                const y = new Date(b.modified).getTime();
+                if (x > y) {
+                    return 1;
+                }
+                if (x < y) {
+                    return -1;
+                }
+                return 0;
+            });
+            break;
+        case ("aToZ"):
+            tempShownTasks.sort(function(a, b) {
+                const x = a.taskName.toLowerCase();
+                const y = b.taskName.toLowerCase();
+                if (x > y) {
+                    return 1;
+                }
+                if (x < y) {
+                    return -1;
+                }
+                return 0;
+            });
+            break;
+        case ("zToA"):
+            tempShownTasks.sort(function(a, b) {
+                const x = a.taskName.toLowerCase();
+                const y = b.taskName.toLowerCase();
+                if (x > y) {
+                    return -1;
+                }
+                if (x < y) {
+                    return 1;
+                }
+                return 0;
+            });
+            break;
+        case ("list"):
+            let tempNoList = tempShownTasks.filter((task) => {return task.list === ""});
+            tempShownTasks = tempShownTasks.filter((task) => {return task.list !== ""});
+            tempShownTasks.sort(function(a, b) {
+                const x = a.list.toLowerCase();
+                const y = b.list.toLowerCase();
+                if (x > y) {
+                    return 1;
+                }
+                if (x < y) {
+                    return -1;
+                }
+                return 0;
+            });
+            tempShownTasks = tempShownTasks.concat(tempNoList);
+            break;
+    }
+    taskContainer.textContent = "";
+    for (let task of tempShownTasks) {
+        addTaskToList(task);
     }
 }
 

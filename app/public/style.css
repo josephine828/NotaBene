@@ -122,6 +122,10 @@ header h1 {
     padding: 1vh;
 }
 
+.selectedListLegend, .selectedCategoryLegend {
+    color: green;
+}
+
 #tasksContainer {
     border: 3px solid white;
     text-align: center;
