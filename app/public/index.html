@@ -103,8 +103,31 @@
         </div>
 
         <div id="editTaskMenu" class="menuPanel" style="display: none;">
-            Edit
+            Edit Task
             <button class="closeButton">X</button>
+            <div id="editMenuContainer">
+                <div id="leftEditMenuContainer">
+                    <input id="taskNameEditInput" placeholder="Enter task name">
+                    <input id="taskDescriptionEditInput" placeholder="Enter task description">
+                </div>
+                <div id="rightEditMenuContainer">
+                    <label for="dueDate">Due Date:</label>
+                    <input type="date" id="dueDateEditInput" name="dueDate">
+                    <div id="listEditContainer">List:
+                        <div id="listEditSelect"></div>
+                        <input id="listEditInput" placeholder="New List">
+                        <button id="addListEditButton">+</button>
+                    </div>
+                </div>
+            </div>
+            <div id="categoriesEditContainer">
+                Categories:
+                <div id="categoryEditSelect"></div>
+                <input id="categoryEditInput" placeholder="New Category">
+                <button id="addCategoryEditButton">+</button>
+            </div>
+            <button class="closeButton">Cancel</button>
+            <button id="saveTaskEditMenuButton">Save</button>
         </div>
         <div id="settingsPanel" class="menuPanel" style="display: none;">
             Settings

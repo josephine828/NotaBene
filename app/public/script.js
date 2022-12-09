@@ -17,13 +17,21 @@ let addListButton = document.getElementById("addListButton");
 let addCategoryButton = document.getElementById("addCategoryButton");
 let sortSelect = document.getElementById("sortSelect");
 
+let listEditSelect = document.getElementById("listEditSelect");
+let categoryEditSelect = document.getElementById("categoryEditSelect");
+let addListEditButton = document.getElementById("addListEditButton");
+let addCategoryEditButton = document.getElementById("addCategoryEditButton");
+
 let tempTaskArray = [];
 let tempShownTasks = [];
 let tempListArray = [];
 let tempCategoryArray = [];
 let taskCounter = 0;
+let currentID = 0;
 
 function init() {
+    loadListOptions();
+    loadCategoryOptions();
     settingsTab.addEventListener("click", settingsPanelAction);
     singleView.addEventListener("click", () => {
         multipleView.className = "";
@@ -86,6 +94,33 @@ function init() {
     document.getElementById("addTaskMenuButton").addEventListener("click", () => {
         addTask();
     });
+    listEditInput.addEventListener("keyup", (key) => {
+        if (key.key === "Enter" && addList.value !== "") {
+            addList(listEditInput.value);
+            loadListOptions();
+        }
+    });
+    addListEditButton.addEventListener("click", () => {
+        if (addList.value !== "") {
+            addList(listEditInput.value);
+            loadListOptions();
+        }
+    });
+    categoryEditInput.addEventListener("keyup", (key) => {
+        if (key.key === "Enter" && categoryEditInput.value !== "") {
+            addCategory(categoryEditInput.value);
+            loadCategoryOptions();
+        }
+    });
+    addCategoryEditButton.addEventListener("click", () => {
+        if (categoryEditInput.value !== "") {
+            addCategory(categoryEditInput.value);
+            loadCategoryOptions();
+        }
+    });
+    document.getElementById("saveTaskEditMenuButton").addEventListener("click", (event) => {
+        editTask();
+    });
 
     sortSelect.addEventListener("change", sortTasks);
 }
@@ -113,6 +148,10 @@ function addTaskToList(taskObject) {
     taskDiv.setAttribute("taskID", taskCounter);
     taskDiv.addEventListener("click", (e) => {
         e.stopPropagation();
+        currentID = taskObject.taskID;
+        taskNameEditInput.value = taskName;
+        taskDescriptionEditInput.value = taskObject.taskDescription;
+        dueDateEditInput.value = taskObject.dueDate;
         editTaskMenu.style.display = "block";
         darken.style.display = "block";
     });
@@ -149,9 +188,11 @@ function addTaskToList(taskObject) {
 function loadListOptions() {
     if (tempListArray.length === 0) {
         listSelect.textContent = "There are currently no lists to add the task to. Add a new list below!";
+        listEditSelect.textContent = "There are currently no lists to add the task to. Add a new list below!";
     }
     else {
         listSelect.textContent = "";
+        listEditSelect.textContent = "";
         for (let listOption of tempListArray) {
             let div = document.createElement("div");
             div.textContent = listOption;
@@ -169,6 +210,7 @@ function loadListOptions() {
                 }
             });
             listSelect.append(div);
+            listEditSelect.appendChild(div.cloneNode(true));
         }
     }
 }
@@ -176,9 +218,11 @@ function loadListOptions() {
 function loadCategoryOptions() {
     if (tempCategoryArray.length === 0) {
         categorySelect.textContent = "There are currently no categories to add the task to.";
+        categoryEditSelect.textContent = "There are currently no categories to add the task to.";
     }
     else {
         categorySelect.textContent = "";
+        categoryEditSelect.textContent = "";
         for (let categoryOption of tempCategoryArray) {
             let div = document.createElement("div");
             div.textContent = categoryOption;
@@ -191,12 +235,14 @@ function loadCategoryOptions() {
                 }
             });
             categorySelect.append(div);
+            categoryEditSelect.appendChild(div.cloneNode(true));
         }
     }
 }
 
 function addList(listName) {
     listInput.value = "";
+    listEditInput.value = "";
     if (!tempListArray.includes(listName)) {
         tempListArray.push(listName);
         updateListLegends();
@@ -208,6 +254,7 @@ function addList(listName) {
 
 function addCategory(categoryName) {
     categoryInput.value = "";
+    categoryEditInput.value = "";
     if (!tempCategoryArray.includes(categoryName)) {
         tempCategoryArray.push(categoryName);
         updateCategoryLegend();
@@ -222,6 +269,12 @@ let taskDescriptionInput = document.getElementById("taskDescriptionInput");
 let dueDateInput = document.getElementById("dueDateInput");
 let listInput = document.getElementById("listInput");
 let categoryInput = document.getElementById("categoryInput");
+
+let taskNameEditInput = document.getElementById("taskNameEditInput");
+let taskDescriptionEditInput = document.getElementById("taskDescriptionEditInput");
+let dueDateEditInput = document.getElementById("dueDateEditInput");
+let listEditInput = document.getElementById("listEditInput");
+let categoryEditInput = document.getElementById("categoryEditInput");
 
 function addTask() {
     if (taskNameInput.value === "") {
@@ -258,6 +311,49 @@ function addTask() {
         categoryInput.value = "";
         addTaskMenu.style.display = "none";
         darken.style.display = "none";
+    }
+}
+
+function editTask() {
+    if (taskNameEditInput.value === "") {
+        alert("You cannot leave the task name blank!");
+    }
+    else {
+        let selectedListElement = document.getElementsByClassName("selectedList")[0];
+        let selectedList = "";
+        if (selectedListElement !== undefined) {
+            selectedList = selectedListElement.textContent;
+        }
+        let selectedCategoryElements = document.getElementsByClassName("selectedCategory");
+        let selectedCategories = [];
+        for (let selectedCategoryElement of selectedCategoryElements) {
+            selectedCategories.push(selectedCategoryElement.textContent);
+        }
+        let taskComplete = false;
+        if (tempTaskArray[currentID - 1].status === "complete") {
+            taskComplete = true;
+        }
+        let tempTask = {taskID: currentID, taskName: taskNameEditInput.value, status: taskComplete, taskDescription: taskDescriptionEditInput.value, dueDate: dueDateEditInput.value, list: selectedList, categories: selectedCategories, modified: new Date()};
+        tempTaskArray = tempTaskArray.filter((task) => {return task.taskID !== currentID});
+        tempShownTasks = tempShownTasks.filter((task) => {return task.taskID !== currentID});
+        tempTaskArray.push(tempTask);
+        tempShownTasks.push(tempTask);
+        loadSingleTaskList();
+
+        for (let listElement of document.getElementsByClassName("selectedList")) {
+            listElement.classList.remove("selectedList");
+        }
+        for (let categoryElement of document.getElementsByClassName("selectedCategory")) {
+            categoryElement.classList.remove("selectedCategory");
+        }
+        taskNameEditInput.value = "";
+        taskDescriptionEditInput.value = "";
+        dueDateEditInput.value = "";
+        listEditInput.value = "";
+        categoryEditInput.value = "";
+        editTaskMenu.style.display = "none";
+        darken.style.display = "none";
+        currentID = 0;
     }
 }
 
@@ -299,7 +395,6 @@ function updateCategoryLegend() {
                 }
                 else {
                     div.classList.add("selectedCategoryLegend");
-                    console.log("added");
                 }
                 loadFilteredTasks();
             });
@@ -329,7 +424,6 @@ function loadFilteredTasks() {
     }
     else {
         for (let task of tempTaskArray) {
-            console.log(task);
             if (selectedLists.length > 0 && selectedLists.includes(task.list) && !tempShownTasks.includes(task)) {
                 tempShownTasks.push(task);
             }
@@ -341,6 +435,16 @@ function loadFilteredTasks() {
                 }
             }
         }
+    }
+    for (let task of tempShownTasks) {
+        addTaskToList(task);
+    }
+}
+
+function loadSingleTaskList() {
+    const tasks = document.getElementsByClassName("task");
+    while (tasks.length > 0) {
+        tasks[0].parentNode.removeChild(tasks[0]);
     }
     for (let task of tempShownTasks) {
         addTaskToList(task);
