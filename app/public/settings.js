@@ -7,7 +7,7 @@ let helpPanel = document.getElementById("helpPanel");
 
 let theme = document.getElementById("theme");
 const themesList = ["default", "burgundy", "rose red", "mango tango", "golden yellow", "forest green", "teal", "baby blue", "amethyst", "magenta", "watermelon pink", "cafe au lait", "onyx", "rainbow", "pastel rainbow", "sunset", "ocean", "neon", "cool", "warm"];
-let currentTheme = 0;
+let currentTheme = parseInt(localStorage.getItem('currentTheme')) || 0;
 
 const lightColorsList = [
     {
@@ -213,6 +213,7 @@ const lightColorsList = [
 ];
 
 function init() {
+    updateColor();
     settingsTab.addEventListener("click", settingsPanelAction);
     for (let closeButton of document.getElementsByClassName("closeButton")) {
         closeButton.addEventListener("click", () => {
@@ -276,6 +277,7 @@ function updateColor() {
 }
 
 function loadTheme() {
+    localStorage.setItem("currentTheme", currentTheme);
     document.getElementById("theme").href = "/themes.css";
     var r = document.documentElement;
     r.style.setProperty("--first-color", lightColorsList[currentTheme].firstColor);

@@ -18,10 +18,10 @@ let groupEditSelect = document.getElementById("groupEditSelect");
 let saveNoteButton = document.getElementById("saveNoteButton");
 let deleteNoteEditMenuButton = document.getElementById("deleteNoteEditMenuButton");
 
-let tempNotesArray = [];
-let tempGroupsArray = [];
-let notesCounter = 0;
-let currentNoteID = 0;
+let tempNotesArray = localStorage.getItem('tempNotesArray') ? JSON.parse(localStorage.getItem('tempNotesArray')) : [];
+let tempGroupsArray = localStorage.getItem('tempGroupsArray') ? JSON.parse(localStorage.getItem('tempGroupsArray')) : [];
+let notesCounter = parseInt(localStorage.getItem('notesCounter')) || 0;
+let currentNoteID = parseInt(localStorage.getItem('currentNoteID')) || 0;
 
 function init() {
     loadNotesAndGroups();
@@ -100,6 +100,7 @@ function loadNotesAndGroups() {
                     notesDisplay.textContent = "Select a note to view it here.";
                     editNoteButton.style.display = "none";
                     currentNoteID = 0;
+                    localStorage.setItem("currentNoteID", currentNoteID);
                 }
                 else {
                     if (document.getElementsByClassName("selectedNote")[0]) {
@@ -113,6 +114,7 @@ function loadNotesAndGroups() {
                     }
                     editNoteButton.style.display = "block";
                     currentNoteID = note.noteID;
+                    localStorage.setItem("currentNoteID", currentNoteID);
                 }
             });
             notesGroupsContainer.append(div);
@@ -133,6 +135,7 @@ function loadNotesInGroup(groupName, groupContainer) {
                 notesDisplay.textContent = "Select a note to view it here.";
                 editNoteButton.style.display = "none";
                 currentNoteID = 0;
+                localStorage.setItem("currentNoteID", currentNoteID);
             }
             else {
                 if (document.getElementsByClassName("selectedNote")[0]) {
@@ -146,6 +149,7 @@ function loadNotesInGroup(groupName, groupContainer) {
                 }
                 editNoteButton.style.display = "block";
                 currentNoteID = note.noteID;
+                localStorage.setItem("currentNoteID", currentNoteID);
             }
         });
         groupContainer.append(div);
@@ -155,6 +159,7 @@ function loadNotesInGroup(groupName, groupContainer) {
 function addGroup(groupName) {
     if (!tempGroupsArray.includes(groupName)) {
         tempGroupsArray.push(groupName);
+        localStorage.setItem("tempGroupsArray", JSON.stringify(tempGroupsArray));
         loadGroupSelect();
     }
     else {
@@ -214,6 +219,7 @@ function addNote() {
     }
     else {
         notesCounter++;
+        localStorage.setItem("notesCounter", notesCounter);
         let selectedGroupElement = document.getElementsByClassName("selectedGroup")[0];
         let selectedGroup = "";
         if (selectedGroupElement !== undefined) {
@@ -221,6 +227,7 @@ function addNote() {
         }
         let tempNote = {noteID: notesCounter, noteName: noteNameInput.value, notesContent: notesContent.value, group: selectedGroup, modified: new Date()};
         tempNotesArray.push(tempNote);
+        localStorage.setItem("tempNotesArray", JSON.stringify(tempNotesArray));
         loadNotesAndGroups();
         createNotesMenu.style.display = "none";
         darken.style.display = "none";
@@ -252,6 +259,7 @@ function saveNote() {
         let tempNote = {noteID: currentNoteID, noteName: noteNameEditInput.value, notesContent: notesEditContent.value, group: selectedGroup, modified: new Date()};
         tempNotesArray = tempNotesArray.filter(note => {return note.noteID !== currentNoteID});
         tempNotesArray.push(tempNote);
+        localStorage.setItem("tempNotesArray", JSON.stringify(tempNotesArray));
         loadNotesAndGroups();
         editNoteMenu.style.display = "none";
         darken.style.display = "none";
@@ -261,6 +269,7 @@ function saveNote() {
 
 function deleteNote() {
     tempNotesArray = tempNotesArray.filter(note => {return note.noteID !== currentNoteID});
+    localStorage.setItem("tempNotesArray", JSON.stringify(tempNotesArray));
     loadNotesAndGroups();
     editNoteMenu.style.display = "none";
     darken.style.display = "none";

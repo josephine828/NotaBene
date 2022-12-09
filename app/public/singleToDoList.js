@@ -20,25 +20,44 @@ let categoryEditSelect = document.getElementById("categoryEditSelect");
 let addListEditButton = document.getElementById("addListEditButton");
 let addCategoryEditButton = document.getElementById("addCategoryEditButton");
 
-let tempTaskArray = [];
-let tempShownTasks = [];
-let tempListArray = [];
-let tempCategoryArray = [];
-export let taskCounter = 0;
-let currentID = 0;
+let tempTaskArray = localStorage.getItem('tempTaskArray') ? JSON.parse(localStorage.getItem('tempTaskArray')) : [];
+let tempShownTasks = localStorage.getItem('tempShownTasks') ? JSON.parse(localStorage.getItem('tempShownTasks')) : [];
+let tempListArray = localStorage.getItem('tempListArray') ? JSON.parse(localStorage.getItem('tempListArray')) : [];
+let tempCategoryArray = localStorage.getItem('tempCategoryArray') ? JSON.parse(localStorage.getItem('tempCategoryArray')) : [];
+export let taskCounter = parseInt(localStorage.getItem('taskCounter')) || 0;
+let currentID = parseInt(localStorage.getItem('currentID')) || 0;
 
 export {tempTaskArray, tempShownTasks, tempListArray, tempCategoryArray, currentID};
 
-export function incrementCounter() { taskCounter++; }
-export function setCurrentID(id) { currentID = id; }
-export function setTempTaskArray(arr) { tempTaskArray = arr; }
-export function setTempShownTasks(arr) { tempShownTasks = arr; }
-export function setTempListArray(arr) { tempListArray = arr; }
-export function setTempCategoryArray(arr) { tempCategoryArray = arr; }
+export function incrementCounter() { 
+    taskCounter++; 
+    localStorage.setItem("taskCounter", taskCounter);
+}
+export function setCurrentID(id) {
+    currentID = id; 
+    localStorage.setItem("currentID", currentID);
+}
+export function setTempTaskArray(arr) {
+    tempTaskArray = arr; 
+    localStorage.setItem("tempTaskArray", JSON.stringify(tempTaskArray));
+}
+export function setTempShownTasks(arr) { 
+    tempShownTasks = arr; 
+    localStorage.setItem("tempShownTasks", JSON.stringify(tempShownTasks));
+}
+export function setTempListArray(arr) { 
+    tempListArray = arr; 
+    localStorage.setItem("tempListArray", JSON.stringify(tempListArray));
+}
+export function setTempCategoryArray(arr) { 
+    tempCategoryArray = arr; 
+    localStorage.setItem("tempCategoryArray", JSON.stringify(tempCategoryArray));
+}
 
 function init() {
     loadListOptions();
     loadCategoryOptions();
+    loadSingleTaskList();
     singleView.addEventListener("click", () => {
         multipleView.className = "";
         singleView.className = "selectedView";
@@ -142,11 +161,14 @@ function quickAddTask(taskName) {
     }
     else {
         taskCounter++;
+        localStorage.setItem("taskCounter", taskCounter);
         quickAddTaskInput.value = "";
         noTaskMessage.style.display = "none";
         let tempTask = {taskID: taskCounter, taskName: taskName, status: "incomplete", taskDescription: "", dueDate: null, list: "", categories: [], modified: new Date()};
         tempTaskArray.push(tempTask);
+        localStorage.setItem("tempTaskArray", JSON.stringify(tempTaskArray));
         tempShownTasks.push(tempTask);
+        localStorage.setItem("tempShownTasks", JSON.stringify(tempShownTasks));
         addTaskToList(tempTask);
     }
 }
@@ -164,6 +186,7 @@ function addTaskToList(taskObject) {
     taskDiv.addEventListener("click", (e) => {
         e.stopPropagation();
         currentID = taskObject.taskID;
+        localStorage.setItem("currentID", currentID);
         taskNameEditInput.value = taskName;
         taskDescriptionEditInput.value = taskObject.taskDescription;
         dueDateEditInput.value = taskObject.dueDate;
@@ -188,9 +211,11 @@ function addTaskToList(taskObject) {
         if (doneButton.parentElement.classList.contains("complete")) {
             doneButton.parentElement.classList.remove("complete");
             tempTaskArray[tempID].status = "incomplete";
+            localStorage.setItem("tempTaskArray", JSON.stringify(tempTaskArray));
         }
         else {
             tempTaskArray[tempID].status = "complete";
+            localStorage.setItem("tempTaskArray", JSON.stringify(tempTaskArray));
         }
         loadSingleTaskList();
     });
@@ -296,6 +321,7 @@ function addList(listName) {
     listEditInput.value = "";
     if (!tempListArray.includes(listName)) {
         tempListArray.push(listName);
+        localStorage.setItem("tempListArray", JSON.stringify(tempListArray));
         updateListLegends();
     }
     else {
@@ -308,6 +334,7 @@ function addCategory(categoryName) {
     categoryEditInput.value = "";
     if (!tempCategoryArray.includes(categoryName)) {
         tempCategoryArray.push(categoryName);
+        localStorage.setItem("tempCategoryArray", JSON.stringify(tempCategoryArray));
         updateCategoryLegend();
     }
     else {
@@ -346,7 +373,9 @@ function addTask() {
         }
         let tempTask = {taskID: taskCounter, taskName: taskNameInput.value, status: "incomplete", taskDescription: taskDescriptionInput.value, dueDate: dueDateInput.value, list: selectedList, categories: selectedCategories, modified: new Date()};
         tempTaskArray.push(tempTask);
+        localStorage.setItem("tempTaskArray", JSON.stringify(tempTaskArray));
         tempShownTasks.push(tempTask);
+        localStorage.setItem("tempShownTasks", JSON.stringify(tempShownTasks));
         addTaskToList(tempTask);
         addTaskMenu.style.display = "none";
         darken.style.display = "none";
@@ -372,7 +401,9 @@ function editTask() {
         let tempTask = {taskID: currentID, taskName: taskNameEditInput.value, status: tempTaskArray[tempID].status, taskDescription: taskDescriptionEditInput.value, dueDate: dueDateEditInput.value, list: selectedList, categories: selectedCategories, modified: new Date()};
         deleteTask(currentID);
         tempTaskArray.push(tempTask);
+        localStorage.setItem("tempTaskArray", JSON.stringify(tempTaskArray));
         tempShownTasks.push(tempTask);
+        localStorage.setItem("tempShownTasks", JSON.stringify(tempShownTasks));
         loadSingleTaskList();
         clearFields();
     }
@@ -430,6 +461,7 @@ function updateCategoryLegend() {
 function loadFilteredTasks() {
     taskContainer.textContent = "";
     tempShownTasks = [];
+    localStorage.setItem("tempShownTasks", JSON.stringify(tempShownTasks));
     let selectedListElements = document.getElementsByClassName("selectedListLegend");
     let selectedLists = [];
     for (let selectedListElement of selectedListElements) {
@@ -442,16 +474,19 @@ function loadFilteredTasks() {
     }
     if (selectedLists.length === 0 && selectedCategories.length === 0) {
         tempShownTasks = tempTaskArray;
+        localStorage.setItem("tempShownTasks", JSON.stringify(tempShownTasks));
     }
     else {
         for (let task of tempTaskArray) {
             if (selectedLists.length > 0 && selectedLists.includes(task.list) && !tempShownTasks.includes(task)) {
                 tempShownTasks.push(task);
+                localStorage.setItem("tempShownTasks", JSON.stringify(tempShownTasks));
             }
             if (selectedCategories.length > 0) {
                 for (let category of task.categories) {
                     if (selectedCategories.includes(category) && !tempShownTasks.includes(task)) {
                         tempShownTasks.push(task);
+                        localStorage.setItem("tempShownTasks", JSON.stringify(tempShownTasks));
                     }
                 }
             }
@@ -463,6 +498,12 @@ function loadFilteredTasks() {
 }
 
 function loadSingleTaskList() {
+    if (tempTaskArray.length === 0) {
+        noTaskMessage.style.display = "block";
+    }
+    else {
+        noTaskMessage.style.display = "none";
+    }
     const tasks = document.getElementsByClassName("task");
     while (tasks.length > 0) {
         tasks[0].parentNode.removeChild(tasks[0]);
@@ -470,6 +511,7 @@ function loadSingleTaskList() {
     let completedTasks = tempShownTasks.filter(task => {return task.status === "complete"});
     tempShownTasks = tempShownTasks.filter(task => {return task.status !== "complete"});
     tempShownTasks = tempShownTasks.concat(completedTasks);
+    localStorage.setItem("tempShownTasks", JSON.stringify(tempShownTasks));
     for (let task of tempShownTasks) {
         addTaskToList(task);
     }
@@ -573,6 +615,7 @@ function sortTasks() {
                 return 0;
             });
             tempShownTasks = tempShownTasks.concat(tempNoList);
+            localStorage.setItem("tempShownTasks", JSON.stringify(tempShownTasks));
             break;
     }
     taskContainer.textContent = "";
@@ -604,11 +647,14 @@ function clearFields() {
 
 function deleteTask(id) {
     tempTaskArray = tempTaskArray.filter((task) => {return task.taskID !== id});
+    localStorage.setItem("tempTaskArray", JSON.stringify(tempTaskArray));
     tempShownTasks = tempShownTasks.filter((task) => {return task.taskID !== id});
+    localStorage.setItem("tempShownTasks", JSON.stringify(tempShownTasks));
     loadSingleTaskList();
     editTaskMenu.style.display = "none";
     darken.style.display = "none";
     currentID = 0;
+    localStorage.setItem("currentID", currentID);
 }
 
 init();
