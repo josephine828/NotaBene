@@ -16,6 +16,7 @@ let noteNameEditInput = document.getElementById("noteNameEditInput");
 let notesEditContent = document.getElementById("notesEditContent");
 let groupEditSelect = document.getElementById("groupEditSelect");
 let saveNoteButton = document.getElementById("saveNoteButton");
+let deleteNoteEditMenuButton = document.getElementById("deleteNoteEditMenuButton");
 
 let tempNotesArray = [];
 let tempGroupsArray = [];
@@ -55,9 +56,11 @@ function init() {
     addNoteButton.addEventListener("click", addNote);
     editNoteButton.addEventListener("click", editMode);
     saveNoteButton.addEventListener("click", saveNote);
+    deleteNoteEditMenuButton.addEventListener("click", deleteNote);
 }
 
 function loadNotesAndGroups() {
+    notesDisplay.textContent = "Select a note to view it here.";
     if (tempNotesArray.length === 0 && tempGroupsArray.length === 0) {
         notesGroupsContainer.textContent = "You currently do not have any notes or groups.";
     }
@@ -254,6 +257,14 @@ function saveNote() {
         darken.style.display = "none";
         clearFields();
     }
+}
+
+function deleteNote() {
+    tempNotesArray = tempNotesArray.filter(note => {return note.noteID !== currentNoteID});
+    loadNotesAndGroups();
+    editNoteMenu.style.display = "none";
+    darken.style.display = "none";
+    clearFields();
 }
 
 function clearFields() {
