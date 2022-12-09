@@ -18,38 +18,61 @@
             </div>
         </header>
         <div id="container">
-            Notes
-            <div id="notesGroupsContainer">
-                You currently do not have any notes or groups.
+            <h2>Your Notes</h2>
+            <div id="notesContainer">
+                <div id="notesGroupsContainer">
+                    You currently do not have any notes or groups.
+                </div>
+                <!-- <div id="filterAndSortContainer">
+                    <label>Filter by:
+                        <select id="filterSelect" name="filterSelect">
+                            <option value="group">Group</option>
+                            <option value="category">Category</option>
+                        </select>
+                    </label>
+                    <label>Sort by:
+                        <select id="sortSelect" name="sortSelect">
+                            <option value="mostRecent">Most Recent</option>
+                            <option value="leastRecent">Least Recent</option>
+                            <option value="aToZ">A to Z</option>
+                            <option value="zToA">Z to A</option>
+                            <option value="category">Category</option>
+                        </select>
+                    </label>
+                </div> -->
+                <div id="notesDisplay">Select a note to view it here.</div>
             </div>
-            <div id="filterAndSortContainer">
-                <label>Filter by:
-                    <select id="filterSelect" name="filterSelect">
-                        <option value="group">Group</option>
-                        <option value="category">Category</option>
-                    </select>
-                </label>
-                <label>Sort by:
-                    <select id="sortSelect" name="sortSelect">
-                        <option value="mostRecent">Most Recent</option>
-                        <option value="leastRecent">Least Recent</option>
-                        <option value="aToZ">A to Z</option>
-                        <option value="zToA">Z to A</option>
-                        <option value="category">Category</option>
-                    </select>
-                </label>
-            </div>
-            <div id="notesDisplay">Select a note to view it here.</div>
             <div id="notesButtonsContainer">
                 <button id="createNoteButton">Create Note</button>
-                <button id="addGroupButton">Add Group</button>
-                <button id="editNoteButton">Edit Note</button>
+                <input class="addGroupInput" placeholder="New Group">
+                <button class="addGroupButton">Add Group</button>
+                <button id="editNoteButton" style="display: none;">Edit Note</button>
             </div>
         </div>
 
 
 
         <div id="darken" style="display: none;"></div>
+
+        
+        <div id="createNotesMenu" class="menuPanel" style="display: none;">
+            Create a New Note
+            <button class="closeButton">X</button>
+            <div id="createNotesContainer">
+                <input id="noteNameInput" placeholder="Enter note name">
+                <br>
+                <textarea id="notesContent" name="notesContent" placeholder="Enter note contents"></textarea> 
+                <br>
+                <div id="groupContainer">Groups:
+                    <div id="groupSelect">There are currently no groups to add the note to. Add a new group below!</div>
+                    <input class="addGroupInput" placeholder="New Group">
+                    <button class="addGroupButton">+</button>
+                </div>
+                <button class="closeButton">Cancel</button>
+                <button id="addNoteButton">Create</button>
+            </div>
+        </div>
+
         <div id="settingsPanel" class="menuPanel" style="display: none;">
             Settings
             <button class="closeButton">X</button>
