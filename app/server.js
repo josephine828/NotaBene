@@ -6,8 +6,7 @@ const pg = require("pg");
 const express = require("express");
 const app = express();
 
-const port = 3000;
-const hostname = "localhost";
+const port = process.env.PORT || 3000;
 
 const env = require("../env.json");
 const Pool = pg.Pool;
@@ -24,6 +23,6 @@ app.get("/", (req, res) => {
     res.send("public/index.html"); 
 });
 
-app.listen(port, hostname, () => {
-    console.log(`Listening at: http://${hostname}:${port}`);
+app.listen(port, () => {
+    console.log(`Server is listening on: ${port}`);
 });
