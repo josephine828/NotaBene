@@ -36,6 +36,7 @@ If you want to edit a task, you can click on it in the list as this opens up the
 Another feature that this view offers is a filtering system on the left hand side of the screen. Once there are lists and/or categories, you can click on the list or category to see tasks within that list or containing that category. You can click on it again to deselect it. 
 
 You can also sort your tasks by using the sort feature on the right hand side. You can sort tasks by:
+
     - Due Sooner
     - Due Later
     - Most Recent
@@ -65,6 +66,7 @@ Besides its productivity features, NotaBene also lets you customize the site to 
 # Future Updates
 
 In the future, I plan on working on the following:
+
     - Switch to PostgreSQL to manage all information 
     - Improve the user interface with better styling
     - Incorporate drag and drop capabilities for tasks and notes
