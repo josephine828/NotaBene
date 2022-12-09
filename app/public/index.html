@@ -6,7 +6,8 @@
         <link rel="stylesheet" type="text/css" href="style.css" />
         <script type="module" src="script.js"></script>
         <script type="module" src="settings.js"></script>
-        <script type="module" src="toDoList.js"></script>
+        <script type="module" src="singleToDoList.js"></script>
+        <script type="module" src="multiToDoLists.js"></script>
     </head>
     <body>
         <header>
@@ -67,12 +68,13 @@
             </div>
         </div>
 
+        <div id="multipleViewContainer" style="display: none;">
+            <div id="listsContainer">
+                You currently have no lists.
+            </div>
+        </div>
 
         <div id="darken" style="display: none;"></div>
-
-        <div id="multipleViewContainer" style="display: none;">
-            You currently have no lists.
-        </div>
 
         <div id="addTaskMenu" class="menuPanel" style="display: none;">
             Add a Task

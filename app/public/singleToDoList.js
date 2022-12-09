@@ -24,8 +24,17 @@ let tempTaskArray = [];
 let tempShownTasks = [];
 let tempListArray = [];
 let tempCategoryArray = [];
-let taskCounter = 0;
+export let taskCounter = 0;
 let currentID = 0;
+
+export {tempTaskArray, tempShownTasks, tempListArray, tempCategoryArray, currentID};
+
+export function incrementCounter() { taskCounter++; }
+export function setCurrentID(id) { currentID = id; }
+export function setTempTaskArray(arr) { tempTaskArray = arr; }
+export function setTempShownTasks(arr) { tempShownTasks = arr; }
+export function setTempListArray(arr) { tempListArray = arr; }
+export function setTempCategoryArray(arr) { tempCategoryArray = arr; }
 
 function init() {
     loadListOptions();
@@ -35,6 +44,7 @@ function init() {
         singleView.className = "selectedView";
         singleViewContainer.style.display = "block";
         multipleViewContainer.style.display = "none";
+        loadSingleTaskList();
     });
     multipleView.addEventListener("click", () => {
         singleView.className = "";
@@ -66,13 +76,13 @@ function init() {
         }
     });
     listInput.addEventListener("keyup", (key) => {
-        if (key.key === "Enter" && addList.value !== "") {
+        if (key.key === "Enter" && listInput.value !== "") {
             addList(listInput.value);
             loadListOptions();
         }
     });
     addListButton.addEventListener("click", () => {
-        if (addList.value !== "") {
+        if (listInput.value !== "") {
             addList(listInput.value);
             loadListOptions();
         }
@@ -94,13 +104,13 @@ function init() {
         clearFields();
     });
     listEditInput.addEventListener("keyup", (key) => {
-        if (key.key === "Enter" && addList.value !== "") {
+        if (key.key === "Enter" && listEditInput.value !== "") {
             addList(listEditInput.value);
             loadListOptions();
         }
     });
     addListEditButton.addEventListener("click", () => {
-        if (addList.value !== "") {
+        if (listEditInput.value !== "") {
             addList(listEditInput.value);
             loadListOptions();
         }
@@ -160,11 +170,11 @@ function addTaskToList(taskObject) {
         taskDescriptionEditInput.value = taskObject.taskDescription;
         dueDateEditInput.value = taskObject.dueDate;
         if (taskObject.list !== "") {
-            document.getElementById(taskObject.list).classList.add("selectedList");
+            document.getElementById(`listID${taskObject.list}`).classList.add("selectedList");
         }
         if (taskObject.categories.length > 0) {
             for (let category of taskObject.categories) {
-                document.getElementById(category).classList.add("selectedCategory");
+                document.getElementById(`catID${category}`).classList.add("selectedCategory");
             }
         }
         editTaskMenu.style.display = "block";
@@ -227,6 +237,7 @@ function loadListOptions() {
             });
             let editDiv = document.createElement("div");
             editDiv.textContent = listOption;
+            editDiv.setAttribute("id", `listID${listOption}`);
             editDiv.addEventListener("click", () => {
                 if (document.getElementsByClassName("selectedList").length > 0 && !editDiv.classList.contains("selectedList")) {
                     alert("You can only select one list!");
@@ -267,6 +278,7 @@ function loadCategoryOptions() {
             });
             let editDiv = document.createElement("div");
             editDiv.textContent = categoryOption;
+            editDiv.setAttribute("id", `catID${category}`);
             editDiv.addEventListener("click", () => {
                 if (editDiv.classList.contains("selectedCategory")) {
                     editDiv.classList.remove("selectedCategory");
