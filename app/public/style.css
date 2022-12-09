@@ -126,12 +126,12 @@ header h1 {
     padding: 10px;
 }
 
-#listsLegend > div:hover, #categoriesLegend > div:hover {
+#listsLegend > div:hover, #categoriesLegend > div:hover, #listSelect > div:hover, #listEditSelect > div:hover, #categorySelect > div:hover, #categoryEditSelect > div:hover {
     cursor: pointer;
     background-color: #007bac;
 }
 
-.selectedListLegend, .selectedCategoryLegend {
+.selectedListLegend, .selectedCategoryLegend, .selectedList, .selectedCategory {
     color: green;
 }
 
@@ -149,6 +149,11 @@ header h1 {
 
 .task {
     cursor: pointer;
+}
+
+.complete {
+    text-decoration: line-through;
+    color: #9c9c9c;
 }
 
 #quickAddTaskContainer {
