@@ -54,10 +54,8 @@ function init() {
     });
     for (let closeButton of document.getElementsByClassName("closeButton")) {
         closeButton.addEventListener("click", () => {
-            settingsPanel.style.display = "none";
             addTaskMenu.style.display = "none";
             editTaskMenu.style.display = "none";
-            darken.style.display = "none";
             clearFields();
         });
     }
@@ -278,7 +276,7 @@ function loadCategoryOptions() {
             });
             let editDiv = document.createElement("div");
             editDiv.textContent = categoryOption;
-            editDiv.setAttribute("id", `catID${category}`);
+            editDiv.setAttribute("id", `catID${categoryOption}`);
             editDiv.addEventListener("click", () => {
                 if (editDiv.classList.contains("selectedCategory")) {
                     editDiv.classList.remove("selectedCategory");

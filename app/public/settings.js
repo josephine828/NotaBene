@@ -4,6 +4,12 @@ let darken = document.getElementById("darken");
 
 function init() {
     settingsTab.addEventListener("click", settingsPanelAction);
+    for (let closeButton of document.getElementsByClassName("closeButton")) {
+        closeButton.addEventListener("click", () => {
+            settingsPanel.style.display = "none";
+            darken.style.display = "none";
+        });
+    }
 }
 
 function settingsPanelAction() {

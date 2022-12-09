@@ -10,9 +10,12 @@ function init() {
     multipleView.addEventListener("click", () => {
         loadLists();
     });
+    document.getElementById("saveTaskEditMenuButton").addEventListener("click", (event) => {
+        loadLists();
+    });
 }
 
-function loadLists() {
+export function loadLists() {
     if (tempListArray.length === 0) {
         listsContainer.textContent = "You currently have no lists.";
     }
