@@ -72,6 +72,23 @@
                 <button id="addNoteButton">Create</button>
             </div>
         </div>
+        <div id="editNoteMenu" class="menuPanel" style="display: none;">
+            Edit Note
+            <button class="closeButton">X</button>
+            <div id="editNotesContainer">
+                <input id="noteNameEditInput" placeholder="Enter note name">
+                <br>
+                <textarea id="notesEditContent" name="notesContent" placeholder="Enter note contents"></textarea> 
+                <br>
+                <div id="groupEditContainer">Groups:
+                    <div id="groupEditSelect">There are currently no groups to add the note to. Add a new group below!</div>
+                    <input class="addGroupInput" placeholder="New Group">
+                    <button class="addGroupButton">+</button>
+                </div>
+                <button class="closeButton">Cancel</button>
+                <button id="saveNoteButton">Save</button>
+            </div>
+        </div>
 
         <div id="settingsPanel" class="menuPanel" style="display: none;">
             Settings

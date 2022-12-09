@@ -4,11 +4,18 @@ let addGroupButtons = document.getElementsByClassName("addGroupButton");
 let editNoteButton = document.getElementById("editNoteButton");
 let notesGroupsContainer = document.getElementById("notesGroupsContainer");
 let notesDisplay = document.getElementById("notesDisplay");
+
 let createNotesMenu = document.getElementById("createNotesMenu");
 let noteNameInput = document.getElementById("noteNameInput");
 let notesContent = document.getElementById("notesContent");
 let groupSelect = document.getElementById("groupSelect");
 let addNoteButton = document.getElementById("addNoteButton");
+
+let editNoteMenu = document.getElementById("editNoteMenu");
+let noteNameEditInput = document.getElementById("noteNameEditInput");
+let notesEditContent = document.getElementById("notesEditContent");
+let groupEditSelect = document.getElementById("groupEditSelect");
+let saveNoteButton = document.getElementById("saveNoteButton");
 
 let tempNotesArray = [];
 let tempGroupsArray = [];
@@ -20,6 +27,7 @@ function init() {
     for (let closeButton of document.getElementsByClassName("closeButton")) {
         closeButton.addEventListener("click", () => {
             createNotesMenu.style.display = "none";
+            editNoteMenu.style.display = "none";
         });
     }
     createNoteButton.addEventListener("click", () => {
@@ -45,9 +53,8 @@ function init() {
         });
     }
     addNoteButton.addEventListener("click", addNote);
-    editNoteButton.addEventListener("click", () => {
-        
-    });
+    editNoteButton.addEventListener("click", editMode);
+    saveNoteButton.addEventListener("click", saveNote);
 }
 
 function loadNotesAndGroups() {
@@ -89,6 +96,7 @@ function loadNotesAndGroups() {
                     div.classList.remove("selectedNote");
                     notesDisplay.textContent = "Select a note to view it here.";
                     editNoteButton.style.display = "none";
+                    currentNoteID = 0;
                 }
                 else {
                     if (document.getElementsByClassName("selectedNote")[0]) {
@@ -101,6 +109,7 @@ function loadNotesAndGroups() {
                         notesDisplay.textContent += (line[i] + "\r\n");
                     }
                     editNoteButton.style.display = "block";
+                    currentNoteID = note.noteID;
                 }
             });
             notesGroupsContainer.append(div);
@@ -120,6 +129,7 @@ function loadNotesInGroup(groupName, groupContainer) {
                 div.classList.remove("selectedNote");
                 notesDisplay.textContent = "Select a note to view it here.";
                 editNoteButton.style.display = "none";
+                currentNoteID = 0;
             }
             else {
                 if (document.getElementsByClassName("selectedNote")[0]) {
@@ -132,6 +142,7 @@ function loadNotesInGroup(groupName, groupContainer) {
                     notesDisplay.textContent += (line[i] + "\r\n");
                 }
                 editNoteButton.style.display = "block";
+                currentNoteID = note.noteID;
             }
         });
         groupContainer.append(div);
@@ -151,9 +162,11 @@ function addGroup(groupName) {
 function loadGroupSelect() {
     if (tempGroupsArray.length === 0) {
         groupSelect.textContent = "There are currently no groups to add the note to. Add a new group below!";
+        groupEditSelect.textContent = "There are currently no groups to add the note to. Add a new group below!";
     }
     else {
         groupSelect.textContent = "";
+        groupEditSelect.textContent = "";
     }
     for (let group of tempGroupsArray) {
         let div = document.createElement("div");
@@ -171,7 +184,24 @@ function loadGroupSelect() {
                 }
             }
         });
+        let editDiv = document.createElement("div");
+        editDiv.textContent = group;
+        editDiv.setAttribute("id", `groupID${group}`);
+        editDiv.addEventListener("click", () => {
+            if (document.getElementsByClassName("selectedGroup").length > 0 && !editDiv.classList.contains("selectedGroup")) {
+                alert("You can only select one group!");
+            }
+            else {
+                if (editDiv.classList.contains("selectedGroup")) {
+                    editDiv.classList.remove("selectedGroup");
+                }
+                else {
+                    editDiv.classList.add("selectedGroup");
+                }
+            }
+        });
         groupSelect.append(div);
+        groupEditSelect.append(editDiv)
     }
 }
 
@@ -195,9 +225,43 @@ function addNote() {
     }
 }
 
+function editMode() {
+    let note = tempNotesArray[tempNotesArray.findIndex(note => note.noteID === currentNoteID)];
+    noteNameEditInput.value = note.noteName;
+    notesEditContent.value = note.notesContent;
+    if (note.group !== "") {
+        document.getElementById(`groupID${note.group}`).classList.add("selectedGroup");
+    }
+    editNoteMenu.style.display = "block";
+    darken.style.display = "block";
+}
+
+function saveNote() {
+    if (noteNameEditInput.value === "") {
+        alert("You cannot leave the note name blank!");
+    }
+    else {
+        let selectedGroupElement = document.getElementsByClassName("selectedGroup")[0];
+        let selectedGroup = "";
+        if (selectedGroupElement !== undefined) {
+            selectedGroup = selectedGroupElement.textContent;
+        }
+        let tempNote = {noteID: currentNoteID, noteName: noteNameEditInput.value, notesContent: notesEditContent.value, group: selectedGroup, modified: new Date()};
+        tempNotesArray = tempNotesArray.filter(note => {return note.noteID !== currentNoteID});
+        tempNotesArray.push(tempNote);
+        loadNotesAndGroups();
+        editNoteMenu.style.display = "none";
+        darken.style.display = "none";
+        clearFields();
+    }
+}
+
 function clearFields() {
     noteNameInput.value = "";
     notesContent.value = "";
+    noteNameEditInput.value = "";
+    notesEditContent.value = "";
+
 
     for (let group of document.getElementsByClassName("selectedGroup")) {
         group.classList.remove("selectedGroup");

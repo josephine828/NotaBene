@@ -126,13 +126,13 @@ header h1 {
     padding: 10px;
 }
 
-#listsLegend > div:hover, #categoriesLegend > div:hover, #listSelect > div:hover, #listEditSelect > div:hover, #categorySelect > div:hover, #categoryEditSelect > div:hover, #groupSelect > div:hover, #notesGroupsContainer > div:hover, #notesGroupsContainer > div > div:hover {
+#listsLegend > div:hover, #categoriesLegend > div:hover, #listSelect > div:hover, #listEditSelect > div:hover, #categorySelect > div:hover, #categoryEditSelect > div:hover, #groupSelect > div:hover, #groupEditSelect > div:hover, #notesGroupsContainer > div:hover, #notesGroupsContainer > div > div:hover {
     cursor: pointer;
     background-color: #007bac;
 }
 
 .selectedListLegend, .selectedCategoryLegend, .selectedList, .selectedCategory, .selectedGroup, .selectedNote  {
-    color: green;
+    color: rgb(255, 180, 110);
 }
 
 #tasksContainer {
@@ -252,7 +252,7 @@ header h1 {
     white-space: pre-line;
 }
 
-#notesContent {
+#notesContent, #notesEditContent {
     resize: none;
     width: 30vw;
     height: 25vh;
@@ -265,4 +265,10 @@ header h1 {
 
 .noteInGroup {
     margin: 2rem;
+}
+
+#editNoteButton {
+    position: absolute;
+    right: 20px;
+    bottom: 10vh;
 }
