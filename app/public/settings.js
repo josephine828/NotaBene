@@ -2,6 +2,8 @@ let settingsTab = document.getElementById("settingsTab");
 let settingsPanel = document.getElementById("settingsPanel");
 let settingsCloseButton = document.getElementById("settingsCloseButton");
 let darken = document.getElementById("darken");
+let helpButton = document.getElementById("helpButton");
+let helpPanel = document.getElementById("helpPanel");
 
 let theme = document.getElementById("theme");
 const themesList = ["default", "burgundy", "rose red", "mango tango", "golden yellow", "forest green", "teal", "baby blue", "amethyst", "magenta", "watermelon pink", "cafe au lait", "onyx", "rainbow", "pastel rainbow", "sunset", "ocean", "neon", "cool", "warm"];
@@ -215,6 +217,7 @@ function init() {
     for (let closeButton of document.getElementsByClassName("closeButton")) {
         closeButton.addEventListener("click", () => {
             settingsPanel.style.display = "none";
+            helpPanel.style.display = "none";
             darken.style.display = "none";
         });
     }
@@ -222,6 +225,10 @@ function init() {
     document.getElementById("prevThemeButton").addEventListener("click", prevTheme);
     document.getElementById("nextThemeButton").addEventListener("click", nextTheme);
     loadTheme();
+    helpButton.addEventListener("click", () => {
+        helpPanel.style.display = "block";
+        darken.style.display = "block";
+    });
 }
 
 function settingsPanelAction() {

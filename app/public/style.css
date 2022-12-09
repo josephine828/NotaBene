@@ -34,6 +34,10 @@ header h1 {
     color: black;
 }
 
+a {
+    color: white;
+}
+
 #tabsContainer div:hover, #tabsContainer a:hover {
     cursor: pointer;
 }
