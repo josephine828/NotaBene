@@ -1,3 +1,7 @@
+// Please Note: A better database schema is required for this project, thus using PostgreSQL is temporarily on hold. The data is currently saved in local storage.
+// I have plans for migrating this over to an actual database in the near future.
+
+
 const pg = require("pg");
 const express = require("express");
 const app = express();
