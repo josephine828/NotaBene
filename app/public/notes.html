@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <title>Nota Bene</title>
         <link rel="stylesheet" type="text/css" href="style.css" />
+        <link rel="stylesheet" type="text/css" href="themes.css" />
         <script type="module" src="script.js"></script>
         <script type="module" src="settings.js"></script>
         <script type="module" src="notes.js"></script>
@@ -93,7 +94,24 @@
 
         <div id="settingsPanel" class="menuPanel" style="display: none;">
             Settings
-            <button class="closeButton">X</button>
+            <button class="closeButton" id="settingsCloseButton">X</button>
+            <br>
+            <br>
+            <label id="theme">
+                theme:
+                <div id="themeSelectCont">
+                    <button id="prevThemeButton"><</button>
+                    <h4 id="themeName">default</h4>
+                    <button id="nextThemeButton">></button>
+                </div>
+                <div id="colorPreviews">
+                    <div class="colorPreview" id="cP1" style="background-color: #005475;"></div>
+                    <div class="colorPreview" id="cP2" style="background-color: #0076a5;"></div>
+                    <div class="colorPreview" id="cP3" style="background-color: #005475;"></div>
+                    <div class="colorPreview" id="cP4" style="background-color: #005e83;"></div>
+                    <div class="colorPreview" id="cP5" style="background-color: #02678f;"></div>
+                    <div class="colorPreview" id="cP6" style="background-color: rgb(255, 180, 110);"></div>
+                </div>
         </div>
         <button id="helpButton">?</button>
     </body>

@@ -1,21 +1,13 @@
 body {
-    background-color: #005475;
     font-size: larger;
     font-weight: bold;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 
-body > div {
-    color: white;
-}
-
 button {
     cursor: pointer;
-    background-color: #0076a5;
-    border: 3px solid white;
     font-size: large;
     font-weight: bold;
-    color: white;
     border-radius: 10px;
 }
 
@@ -23,7 +15,6 @@ header {
     display: flex;
     height: 5rem;
     box-shadow: 0 2px;
-    background-color: #f8f8f8;
 }
 
 header h1 {
@@ -56,7 +47,6 @@ header h1 {
 }
 
 .menuPanel {
-    background-color: #005475;
     border-radius: 20px;
     padding: 3rem;
     top: 50%;
@@ -87,14 +77,9 @@ header h1 {
 
 #viewContainer > div {
     display: inline-block;
-    border: 3px solid white;
     padding: 10px;
     margin-left: 5px;
     cursor: pointer;
-}
-
-.selectedView {
-    background-color: #0076a5;
 }
 
 #singleViewContainer > h2 {
@@ -115,7 +100,6 @@ header h1 {
 }
 
 #listsLegendContainer, #categoriesLegendContainer {
-    border: 3px solid white;
     height: 25vh;
     width: 17.5vh;
     margin-bottom: 50px;
@@ -128,15 +112,9 @@ header h1 {
 
 #listsLegend > div:hover, #categoriesLegend > div:hover, #listSelect > div:hover, #listEditSelect > div:hover, #categorySelect > div:hover, #categoryEditSelect > div:hover, #groupSelect > div:hover, #groupEditSelect > div:hover, #notesGroupsContainer > div:hover, #notesGroupsContainer > div > div:hover {
     cursor: pointer;
-    background-color: #007bac;
-}
-
-.selectedListLegend, .selectedCategoryLegend, .selectedList, .selectedCategory, .selectedGroup, .selectedNote  {
-    color: rgb(255, 180, 110);
 }
 
 #tasksContainer {
-    border: 3px solid white;
     text-align: center;
     width: 35vw;
 }
@@ -162,7 +140,6 @@ header h1 {
     margin-left: 2.5vw;
     padding-top: 1vh;
     bottom: 5vh;
-    border-top: 2px solid white;
 }
 
 .multiTaskContainer {
@@ -178,7 +155,6 @@ header h1 {
     position: relative;
     width: 500px;
     padding-top: 1vh;
-    border-top: 2px solid white;
     justify-content: center;
 }
 
@@ -203,7 +179,6 @@ header h1 {
 }
 
 #listsContainer {
-    background-color: #005e83;
     margin-top: 7.5vh;
     margin-left: 5vw;
     overflow-x: auto;
@@ -222,7 +197,6 @@ header h1 {
 .multiListContainer {
     width: 500px;
     height: 70vh;
-    background-color: #02678f;
     margin: 2.5vh;
 }
 
@@ -243,7 +217,6 @@ header h1 {
 #notesDisplay {
     width: 40vw;
     height: 65vh;
-    background-color: #007bac;
     border-radius: 20px;
     margin-left: 5rem;
     padding: 2.5rem;
@@ -272,3 +245,37 @@ header h1 {
     right: 20px;
     bottom: 10vh;
 }
+
+#themeSelectCont {
+    text-align: center;
+    position: relative;
+    display: flex;
+    height: 5vh;
+    justify-content: center;
+    margin-top: 1vh;
+}
+
+#themeName {
+    font-size: 2rem;
+    margin-top: 1vh;
+    width: 35vw;
+    font-weight: bold;
+}
+
+#colorPreviews {
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    left: -1vw;
+}
+
+.colorPreview {
+    width: 3vw;
+    height: 3vw;
+    border-radius: 50%;
+    border: 1px solid white;
+    margin: 0 5px;
+}
+

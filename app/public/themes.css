@@ -1,0 +1,80 @@
+:root {
+    --first-color: #005475;
+    --second-color: #0076a5;
+    --third-color: #005475;
+    --fourth-color: #005e83;
+    --fifth-color: #02678f;
+    --sixth-color: rgb(255, 180, 110);
+    --light-mode-text: black;
+    --dark-mode-text: white;
+}
+
+body {
+    background-color: var(--first-color);
+}
+
+body > div {
+    color: var(--dark-mode-text);
+}
+
+button {
+    background-color: var(--second-color);
+    border: 3px solid var(--dark-mode-text);
+    color: var(--dark-mode-text);
+}
+
+header {
+    background-color: #f8f8f8;
+}
+
+#tabsContainer div, #tabsContainer a {
+    color: black;
+}
+
+.menuPanel {
+    background-color: var(--third-color);
+}
+
+#viewContainer > div {
+    border: 3px solid var(--dark-mode-text);
+}
+
+.selectedView {
+    background-color: var(--second-color);
+}
+
+#listsLegendContainer, #categoriesLegendContainer {
+    border: 3px solid var(--dark-mode-text);
+}
+
+#listsLegend > div:hover, #categoriesLegend > div:hover, #listSelect > div:hover, #listEditSelect > div:hover, #categorySelect > div:hover, #categoryEditSelect > div:hover, #groupSelect > div:hover, #groupEditSelect > div:hover, #notesGroupsContainer > div:hover, #notesGroupsContainer > div > div:hover {
+    background-color: var(--second-color);
+}
+
+.selectedListLegend, .selectedCategoryLegend, .selectedList, .selectedCategory, .selectedGroup, .selectedNote  {
+    color: var(--sixth-color);
+}
+
+#tasksContainer {
+    border: 3px solid var(--dark-mode-text);
+}
+
+#quickAddTaskContainer {
+    border-top: 2px solid var(--dark-mode-text);
+}
+
+.quickAddTaskContainer {
+    border-top: 2px solid var(--dark-mode-text);
+}
+
+#listsContainer {
+    background-color: var(--fourth-color);
+}
+
+.multiListContainer {
+    background-color: var(--fifth-color);
+}
+
+#notesDisplay {
+    background-color: var(--second-color);
+}
