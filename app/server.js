@@ -6,14 +6,14 @@ const pg = require("pg");
 const express = require("express");
 const app = express();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
-const env = require("../env.json");
-const Pool = pg.Pool;
-const pool = new Pool(env);
-pool.connect().then(function () {
-    console.log(`Connected to database ${env.database}`);
-});
+// const env = require("../env.json");
+// const Pool = pg.Pool;
+// const pool = new Pool(env);
+// pool.connect().then(function () {
+//     console.log(`Connected to database ${env.database}`);
+// });
 
 app.use(express.static("public"));
 app.use(express.json());
